@@ -1,0 +1,4 @@
+Terms:
+Euler- a framework to test and understand how good is ai as teacher
+Socratic Interactions - asking question , instead of answering directly so that user can find answers by self exploration.
+Direct Preference Optimization (DPO - it helps model to give user preferred response based on user feedback
