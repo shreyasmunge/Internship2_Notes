@@ -2,3 +2,75 @@ Terms:
 Euler- a framework to test and understand how good is ai as teacher
 Socratic Interactions - asking question , instead of answering directly so that user can find answers by self exploration.
 Direct Preference Optimization (DPO - it helps model to give user preferred response based on user feedback
+parameters - these are like memory cells of models which store info from training and connect two layers
+reinforcement learning - 
+pipeline - a sequence of steps where data is passed through each step, from raw input to output.(automated process)
+
+Intro:
+In this paper we are building a pipeline where (prompts -> judge -> rank answer -> choose prompts|best ans| worst ans -> DPO training -> fine-tuned model
+
+
+Ways to build Socratic LLMs:
+1. Prompting LLM to give model instructions to act Socratic
+2. Fine-tuning LLM to act like Socratic behavior
+
+Data augmentation and DPO:
+we can use a LLM to create datasets of Socratic conversations and use these datasets to train our LLM with DPO optimization.
+
+Educational applications of LLMs in science:
+Before , people created a benchmark called TutorEval to evaluate the socratic models. but even after fine tuning results were poor. So they create a dataset call TutorChart based 
+on real student-teacher interactions, they used this dataset to create a DPO style dataset and fine tune their model with performed a lot better.
+
+Fine-tuning LLMs for Socratic behaviour
+1. Dataset requirement
+need a dataset which follows question-answer style data,  and has format of (prompt,accepted ans,rejected ans)
+
+2.TutorChart - created a Socratic behavior dataset of science 
+
+3.Mathdial - not socratic behavior exactly, but does not reveal the answer early .
+
+4.Debugging - a dataset that follows Socratic behavior for programming conversation.
+
+5.Fine-tuning with DPO
+They used DPO over reinforcement learning from human feedback (RLHF) because DPO is stable and easy, also needs only two models.
+how DPO works:
+Start with a base model (π_base) → A pretrained LLM.
+Fine-tune it using labeled data (Supervised Fine Tuning → SFT) → Get π_SFT.
+Humans label outputs from π_SFT as good or bad → Create preference data.
+Train again using DPO loss to get final model π_DPO — the model now prefers good answers.
+
+What they did:
+Generated answers — For each question (prompt), the model made 5 candidate answers (A–E).
+Used GPT-4o as a judge — GPT-4o scored each answer on how well it followed the Socratic method (asking good guiding questions, not revealing answers too early, etc.).
+Scored each answer (0–1) — 1 = best Socratic behavior.
+Selected:
+Best answer → accepted example (good)
+Worst answer → rejected example (bad)
+Trained the model with DPO — so it learns to prefer “good” Socratic answers.
+
+Evaluation of ranking answer to provide two options:
+The LLMs used to rank multiple generated answer , usually select the answer with longest lenght. to make sure they are selecting best options we take 100 sample sets of these and give to human and judge LLM.
+If most of answers are similar then we can proced.
+Ranking is based on following chara:
+1. is it a question
+2.on topic
+3.helpful
+4.does it reveal answer?
+These chara are used to compare “socrativeness” of the output given by LLMs.
+Later they discorverd that both the evaluations is well aligned.
+
+Results and Analysis
+Fine-tuning using diverse, Socratic-style dialogue (like TutorChat) makes smaller models almost as Socratic and capable as GPT-4o.
+
+
+two main limitations:
+1. divertes from topic after few iterations
+2. dont know when to end the disscussion.
+the above trained model is good for single-turn interactions , but fail for multi turn due to these limitaions
+
+Conclusion
+fine-tuning Large Language Models using DPO enhances their performance in educational sections
+
+
+
+
