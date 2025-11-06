@@ -64,13 +64,16 @@ Fine-tuning using diverse, Socratic-style dialogue (like TutorChat) makes smalle
 
 
 two main limitations:
-1. divertes from topic after few iterations
-2. dont know when to end the disscussion.
+1. diverts from topic after few iterations
+2. dont know when to end the discussion.
 the above trained model is good for single-turn interactions , but fail for multi turn due to these limitaions
 
 Conclusion
 fine-tuning Large Language Models using DPO enhances their performance in educational sections
 
+
+Resource:
+https://ceur-ws.org/Vol-3879/AIxEDU2024_paper_26.pdf
 
 
 
